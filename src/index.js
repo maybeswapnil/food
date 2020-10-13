@@ -1,17 +1,47 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { render } from 'react-dom';
 import './index.css';
-import App from './App';
+ 
+import Getdata from './App';
 import * as serviceWorker from './serviceWorker';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
+
+class Searchhome extends React.Component {
+
+    constructor(props) {
+      super(props);
+
+      this.state = {
+        userInput : ""
+      };
+      this.print = this.print.bind(this);
+      this.handleChange = this.handleChange.bind(this);
+    }
+    handleChange(event) {
+        this.setState ({
+          userInput: event.target.value
+        });
+    }
+
+    print() {
+      console.log(this.state.userInput)
+    }
+
+
+    render() {
+      return (
+        <div>
+          <div className="search" id="search">
+              <input type="text" id="searchBox" className="search" value={this.state.userInput} onChange={this.handleChange} />
+              <button className="search" id="searchButton" onClick={this.print} >Search</button>
+          </div>
+          <Getdata input={this.state.userInput}/>
+        </div>
+      );
+    }
+  }
+
+render(<Searchhome />, document.getElementById('root'));
+
 serviceWorker.unregister();
